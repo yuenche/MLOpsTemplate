@@ -1,6 +1,14 @@
 name: my-workshop-cd
 on:
   workflow_dispatch:
+  pull_request:
+    branches: 
+      - main
+    types:
+      - opened
+    paths:
+      - src/workshop/core/*
+      - .github/workflows/workshop_cd.yml
   # setup
 jobs:
   deployment:
@@ -24,7 +32,7 @@ jobs:
       - name: AZ Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.MY_AZURE_CREDENTIALS }} #setup to point to your GitHub secret
+          creds: ${{ secrets.AZURE_CREDENTIALS_USERNAME }} #setup to point to your GitHub secret
 
       - name: Install az ml & and tools
         run: |
