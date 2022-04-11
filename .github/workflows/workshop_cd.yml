@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   pull_request:
     branches: 
-    - main
+    - main_disable
     types:
       - opened
     paths:
