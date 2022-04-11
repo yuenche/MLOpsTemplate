@@ -31,7 +31,7 @@ jobs:
       - name: AZ Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS_JAMES }}
+          creds: ${{ secrets.AZURE_CREDENTIALS_USERNAME }}
 
       - name: Install az ml & and tools
         run: |
