@@ -8,7 +8,7 @@ inputs:
   workspaceName:
     description: 'Name of the workspace to work against.'
     required: true
-  endpointnName:
+  endpointName:
     description: 'Name of the endpoint'
     required: true
   endpointFile:
