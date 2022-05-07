@@ -1,17 +1,9 @@
-name: new-cd-staging
+name: yc-cd-prod
 on:
   workflow_dispatch:
-  workflow_run:
-    workflows: [new-ci-train]
-    types:
-      - completed
   push:
     branches: 
-      - integration
-    paths:
-      - src/workshop/core/**
-      - .github/workflows/scoring_unit_test.yml
-      - .github/workflows/new_cd_staging.yml
+      - main
 
 env:
   group: mtcs-ezmlops-rg
@@ -19,12 +11,13 @@ env:
   location: westeurope
   compute: ycmlops9cbuu
   model: nyc_fare_prediction
-  endpoint: mlstg-workshop-yuenche
+  endpoint: mlprod-workshop-yuenche
 
 jobs:
-  Staging-Deployment:
+  Production-Deployment:
+    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
-    environment: 'staging'
+    environment: 'prod'
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
@@ -70,16 +63,10 @@ jobs:
           endpointFile: src/workshop/core/scoring/endpoint.yml
           requestFile: src/workshop/core/scoring/scoring_test_request.json
   
-  pull-request:
-    if: ${{ success() }}
-    needs: [Staging-Deployment]
-    runs-on: ubuntu-latest
-    steps:      
-      - name: Create Pull Request to main
-        uses: thomaseizinger/create-pull-request@master
+      - name: Swap deployment
+        uses: ./.github/actions/aml-endpoint-swap
         with:
-          GITHUB_TOKEN: ${{ secrets.YUENCHE_GITHUB_SECRET }} #setup: provide your github secret name
-          head: ${{ github.ref }}
-          base: main
-          title: "An automatically created PR by staging deployment completed to main"
-
+          resourceGroup: ${{ env.group }}  #setup replace azureml with the name of your resource group in Azure
+          workspaceName: ${{ env.workspace }} #setup replace ws01ent with the name of your workspace in Azure
+          endpointName: ${{ env.endpoint }} 
+          endpointFile: src/workshop/core/scoring/endpoint.yml

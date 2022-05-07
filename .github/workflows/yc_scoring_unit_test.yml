@@ -1,4 +1,4 @@
-name: new_scoring_unit_test
+name: yc_scoring_unit_test
 on:
   workflow_dispatch:
   push:
@@ -7,7 +7,7 @@ on:
       - integration
     paths:
       - src/workshop/core/scoring/*
-      - .github/workflows/scoring_unit_test.yml
+      - .github/workflows/yc_scoring_unit_test.yml
 
 env:
   group: mtcs-ezmldev-rg
