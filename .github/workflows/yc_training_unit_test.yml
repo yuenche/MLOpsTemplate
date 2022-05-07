@@ -12,15 +12,15 @@ on:
       - .github/workflows/yc_training_unit_test.yml
 
 jobs:
-  env-variables:
+  set-variables:
     runs-on: ubuntu-latest
     environment: 'dev'
+    steps:
       - name: Load .env file
         uses: xom9ikk/dotenv@v1.0.2
         with:
           path: ./env
           mode: dev
-
       - name: show env variables
         run: |
           echo "group: ${{ env.group }}"
