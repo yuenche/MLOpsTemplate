@@ -8,14 +8,6 @@ on:
       - src/workshop/core/**
       - .github/workflows/yc_ci_train.yml
 
-env:
-  group: mtcs-ezmlops-rg
-  workspace: ycmlops9aml
-  location: westeurope
-  compute: ycmlops9cbuu
-  model: nyc_fare_prediction
-
-
 jobs:
   Workshop-Train-Validation:
     runs-on: ubuntu-latest
@@ -31,6 +23,18 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install --upgrade build
           python -m pip install --upgrade twine
+      - name: Load .env file
+        uses: xom9ikk/dotenv@v1.0.2
+        with:
+          path: .github/workflows/env
+          mode: staging
+      - name: show env variables
+        run: |
+          echo "group: ${{ env.group }}"
+          echo "workspace: ${{ env.workspace }}"
+          echo "location: ${{ env.location }}"
+          echo "compute: ${{ env.compute }}"  
+          echo "endpoint: ${{ env.endpoint }}" 
       - name: AZ Login
         uses: azure/login@v1
         with:

@@ -11,12 +11,6 @@ on:
       - src/workshop/core/training/*
       - .github/workflows/yc_training_unit_test.yml
 
-env:
-  group: mtcs-ezmldev-rg
-  workspace: ezmldev9aml
-  location: westeurope
-  compute: ezmldev9cxec
-
 jobs:
   unit-test:
     runs-on: ubuntu-latest
@@ -33,10 +27,22 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install --upgrade build
           python -m pip install --upgrade twine
+      - name: Load .env file
+        uses: xom9ikk/dotenv@v1.0.2
+        with:
+          path: .github/workflows/env
+          mode: dev
+      - name: show env variables
+        run: |
+          echo "group: ${{ env.group }}"
+          echo "workspace: ${{ env.workspace }}"
+          echo "location: ${{ env.location }}"
+          echo "compute: ${{ env.compute }}"  
+          echo "endpoint: ${{ env.endpoint }}"  
       - name: AZ Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS_YUENCHE }} # SETUP: replace MY_AZURE_CREDENTIALS with your own secret name    
+          creds: ${{ secrets.AZURE_CREDENTIALS_YUENCHE }} # SETUP: replace MY_AZURE_CREDENTIALS with your own secret name  
       - name: Install AZ ML and tools
         run: | # SETUP line 33 to point to your own AML workspace
           az extension add -n ml -y
