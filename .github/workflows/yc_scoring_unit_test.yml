@@ -9,15 +9,6 @@ on:
       - src/workshop/core/scoring/*
       - .github/workflows/yc_scoring_unit_test.yml
 
-env:
-  group: mtcs-ezmldev-rg
-  workspace: ezmldev9aml
-  location: westeurope
-  compute: ezmldev9cxec
-  endpoint: mldev-workshop-yuenche
-  model: 'azureml:nyc_fare_prediction:1' 
-
-
 jobs:
   unit-test:
     runs-on: ubuntu-latest
@@ -34,6 +25,18 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install --upgrade build
           python -m pip install --upgrade twine
+      - name: Load .env file
+        uses: xom9ikk/dotenv@v1.0.2
+        with:
+          path: .github/workflows/env
+          mode: dev
+      - name: show env variables
+        run: |
+          echo "group: ${{ env.group }}"
+          echo "workspace: ${{ env.workspace }}"
+          echo "location: ${{ env.location }}"
+          echo "compute: ${{ env.compute }}"  
+          echo "endpoint: ${{ env.endpoint }}"  
       - name: AZ Login
         uses: azure/login@v1
         with:

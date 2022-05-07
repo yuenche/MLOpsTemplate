@@ -38,6 +38,7 @@ jobs:
           echo "workspace: ${{ env.workspace }}"
           echo "location: ${{ env.location }}"
           echo "compute: ${{ env.compute }}"  
+          echo "endpoint: ${{ env.endpoint }}"  
       - name: AZ Login
         uses: azure/login@v1
         with:
