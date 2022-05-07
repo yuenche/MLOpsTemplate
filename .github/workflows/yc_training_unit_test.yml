@@ -21,7 +21,7 @@ jobs:
           path: ./env
           mode: dev
 
-      - name: set env variables
+      - name: show env variables
         run: |
           echo "group: ${{ env.group }}"
           echo "workspace: ${{ env.workspace }}"
