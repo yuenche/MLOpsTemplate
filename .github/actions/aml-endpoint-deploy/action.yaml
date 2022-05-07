@@ -53,12 +53,12 @@ runs:
         # Create or update endpoint
         { 
             echo "Creating endpoint with name: $ENDPOINT_NAME" &&
-            az ml online-endpoint create -f $ENDPOINT_FILE
+            az ml online-endpoint create -f $ENDPOINT_FILE --set name=$ENDPOINT_NAME
         } || { 
             echo "Endpoint $ENDPOINT_NAME already exists"
             if [ ${{ inputs.updateIfExists }} == 'true' ]; then
                 echo "Updating endpoint with name: $ENDPOINT_NAME" &&
-                az ml online-endpoint update -f $ENDPOINT_FILE
+                az ml online-endpoint update -f $ENDPOINT_FILE --set name=$ENDPOINT_NAME
             else
                 echo "Skipping update of endpoint with name: $ENDPOINT_NAME"
             fi
@@ -113,7 +113,7 @@ runs:
 
         # Create deployment
         echo "Creating deployment with name: $ENDPOINT_NAME/$STAGING_DEPLOYMENT_NAME"
-        az ml online-deployment create -f $DEPLOYMENT_FILE --only-show-errors --set tags.git_commit=${GITHUB_SHA}
+        az ml online-deployment create -f $DEPLOYMENT_FILE --only-show-errors --set tags.git_commit=${GITHUB_SHA} --set endpoint_name=$ENDPOINT_NAME
         echo "Deployment completed"
 
         # Saving logs
