@@ -1,4 +1,4 @@
-name: workshop-cd
+name: new-cd
 on:
   workflow_dispatch:
   workflow_run:
