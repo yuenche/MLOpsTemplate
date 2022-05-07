@@ -1,19 +1,24 @@
-name: workshop-cd
+name: yc-cd-prod
 on:
   workflow_dispatch:
-  pull_request:
-    types:
-      - opened
+  push:
     branches: 
       - main
-    paths:
-      - src/workshop/core/**
-      - .github/workflows/workshop_cd.yml
-jobs:
-  Workshop-Deployment:
-    runs-on: ubuntu-latest
-    steps:
 
+env:
+  group: mtcs-ezmlops-rg
+  workspace: ycmlops9aml
+  location: westeurope
+  compute: ycmlops9cbuu
+  model: nyc_fare_prediction
+  endpoint: mlprod-workshop-yuenche
+
+jobs:
+  Production-Deployment:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    environment: 'prod'
+    steps:
       - name: Check out repository code
         uses: actions/checkout@v2
 
@@ -39,26 +44,29 @@ jobs:
           sudo apt install jq
           pip install yq
       
-      - name: Run deployment
+      - name: Run deployment to staging
         uses: ./.github/actions/aml-endpoint-deploy
         with:
-          resourceGroup: mtcs-ezmlops-rg #setup replace azureml with the name of your resource group in Azure
-          workspaceName: ycmlops9aml #setup replace ws01ent with the name of your workspace in Azure
+          resourceGroup: ${{ env.group }}  #setup replace azureml with the name of your resource group in Azure
+          workspaceName: ${{ env.workspace }} #setup replace ws01ent with the name of your workspace in Azure
+          endpointName: ${{ env.endpoint }} 
           endpointFile: src/workshop/core/scoring/endpoint.yml
           deploymentFile: src/workshop/core/scoring/deployment.yml
           modelVersion: latest
       
-      - name: Test deployment
+      - name: Test deployment to staging
         uses: ./.github/actions/aml-endpoint-test
         with:
-          resourceGroup: mtcs-ezmlops-rg #setup replace azureml with the name of your resource group in Azure
-          workspaceName: ycmlops9aml #setup replace ws01ent with the name of your workspace in Azure
+          resourceGroup: ${{ env.group }}  #setup replace azureml with the name of your resource group in Azure
+          workspaceName: ${{ env.workspace }} #setup replace ws01ent with the name of your workspace in Azure
+          endpointName: ${{ env.endpoint }} 
           endpointFile: src/workshop/core/scoring/endpoint.yml
           requestFile: src/workshop/core/scoring/scoring_test_request.json
   
       - name: Swap deployment
         uses: ./.github/actions/aml-endpoint-swap
         with:
-          resourceGroup: mtcs-ezmlops-rg #setup replace azureml with the name of your resource group in Azure
-          workspaceName: ycmlops9aml #setup replace ws01ent with the name of your workspace in Azure
+          resourceGroup: ${{ env.group }}  #setup replace azureml with the name of your resource group in Azure
+          workspaceName: ${{ env.workspace }} #setup replace ws01ent with the name of your workspace in Azure
+          endpointName: ${{ env.endpoint }} 
           endpointFile: src/workshop/core/scoring/endpoint.yml

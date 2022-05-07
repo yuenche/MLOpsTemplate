@@ -1,0 +1,64 @@
+name: yc_scoring_unit_test
+on:
+  workflow_dispatch:
+  push:
+    branches-ignore:
+      - main
+      - integration
+    paths:
+      - src/workshop/core/scoring/*
+      - .github/workflows/yc_scoring_unit_test.yml
+
+env:
+  group: mtcs-ezmldev-rg
+  workspace: ezmldev9aml
+  location: westeurope
+  compute: ezmldev9cxec
+  endpoint: mldev-workshop-yuenche
+  model: 'azureml:nyc_fare_prediction:1' 
+
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    environment: 'dev'
+    steps:
+      - name: check out repo
+        uses: actions/checkout@v2
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Upgrade pip
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade build
+          python -m pip install --upgrade twine
+      - name: AZ Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_YUENCHE }} # SETUP: replace MY_AZURE_CREDENTIALS with your own secret name    
+      - name: Install AZ ML and tools
+        run: | # SETUP line 33 to point to your own AML workspace
+          az extension add -n ml -y
+          az configure --defaults group=${{ env.group }} workspace=${{ env.workspace }} location=${{ env.location }} 
+      - name: create online deployment
+        run: |
+          az ml online-deployment create --file src/workshop/core/scoring/deployment.yml --set endpoint_name=${{ env.endpoint }}
+      - name: test new deployment
+        run: |
+          az ml online-endpoint invoke -n ${{ env.endpoint }} --deployment green --request-file src/workshop/core/scoring/scoring_test_request.json 
+
+  pull-request:
+    if: ${{ success() }}
+    needs: [unit-test]
+    runs-on: ubuntu-latest
+    steps:      
+      - name: Create Pull Request to Integration
+        uses: thomaseizinger/create-pull-request@master
+        with:
+          GITHUB_TOKEN: ${{ secrets.YUENCHE_GITHUB_SECRET }} #setup: provide your github secret name
+          head: ${{ github.ref }}
+          base: integration
+          title: "An automatically created PR by successful unit test to integration"
+
