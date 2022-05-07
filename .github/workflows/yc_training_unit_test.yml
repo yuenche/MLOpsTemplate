@@ -1,4 +1,4 @@
-name: new_training_unit_test
+name: yc_training_unit_test
 on:
   workflow_dispatch:
   push:
@@ -9,7 +9,7 @@ on:
       - src/workshop/core/data_engineering/*
       - src/workshop/core/evaluating/*
       - src/workshop/core/training/*
-      - .github/workflows/training_unit_test.yml
+      - .github/workflows/yc_training_unit_test.yml
 
 env:
   group: mtcs-ezmldev-rg

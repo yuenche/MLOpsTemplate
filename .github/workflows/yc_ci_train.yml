@@ -1,4 +1,4 @@
-name: new-ci-train
+name: yc-ci-train
 on:
   workflow_dispatch:
   push:
@@ -6,7 +6,7 @@ on:
       - integration
     paths:
       - src/workshop/core/**
-      - .github/workflows/workshop_ci_train.yml
+      - .github/workflows/yc_ci_train.yml
 
 env:
   group: mtcs-ezmlops-rg
