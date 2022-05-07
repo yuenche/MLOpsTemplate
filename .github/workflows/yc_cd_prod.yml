@@ -49,7 +49,7 @@ jobs:
           sudo apt install jq
           pip install yq
       
-      - name: Run deployment to staging
+      - name: Run deployment to production
         uses: ./.github/actions/aml-endpoint-deploy
         with:
           resourceGroup: ${{ env.group }}  #setup replace azureml with the name of your resource group in Azure
@@ -59,7 +59,7 @@ jobs:
           deploymentFile: src/workshop/core/scoring/deployment.yml
           modelVersion: latest
       
-      - name: Test deployment to staging
+      - name: Test deployment to production
         uses: ./.github/actions/aml-endpoint-test
         with:
           resourceGroup: ${{ env.group }}  #setup replace azureml with the name of your resource group in Azure
