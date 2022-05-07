@@ -27,7 +27,7 @@ jobs:
           echo "workspace: ${{ env.workspace }}"
           echo "location: ${{ env.location }}"
           echo "compute: ${{ env.compute }}"
-jobs:
+
   unit-test:
     runs-on: ubuntu-latest
     environment: 'dev'
