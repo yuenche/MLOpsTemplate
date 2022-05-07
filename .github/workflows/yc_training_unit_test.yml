@@ -29,6 +29,8 @@ jobs:
           echo "compute: ${{ env.compute }}"
 
   unit-test:
+    if: ${{ success() }}
+    needs: [set-variables]
     runs-on: ubuntu-latest
     environment: 'dev'
     steps:
