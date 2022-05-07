@@ -73,7 +73,7 @@ jobs:
   
   pull-request:
     if: ${{ success() }}
-    needs: [unit-test]
+    needs: [Staging-Deployment]
     runs-on: ubuntu-latest
     steps:      
       - name: Create Pull Request to main
@@ -86,8 +86,8 @@ jobs:
 
 
   Production-Deployment:
-    if: ${{ success() }}
-    needs: [unit-test]
+    if: ${{ success() }} && ${{ github.ref == 'refs/heads/main' }}
+    needs: [Staging-Deployment]
     runs-on: ubuntu-latest
     environment: 'prod'
     steps:
