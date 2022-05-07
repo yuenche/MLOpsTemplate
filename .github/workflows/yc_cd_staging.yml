@@ -9,7 +9,6 @@ on:
     branches: 
       - integration
     paths:
-      - src/workshop/core/**
       - .github/workflows/yc_scoring_unit_test.yml
       - .github/workflows/yc_cd_staging.yml
 

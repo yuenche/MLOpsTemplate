@@ -11,22 +11,12 @@ on:
       - src/workshop/core/training/*
       - .github/workflows/yc_training_unit_test.yml
 
-jobs:
-  env-variables:
-    runs-on: ubuntu-latest
-    environment: 'dev'
-      - name: Load .env file
-        uses: xom9ikk/dotenv@v1.0.2
-        with:
-          path: ./env
-          mode: dev
+env:
+  group: mtcs-ezmldev-rg
+  workspace: ezmldev9aml
+  location: westeurope
+  compute: ezmldev9cxec
 
-      - name: set env variables
-        run: |
-          echo "group: ${{ env.group }}"
-          echo "workspace: ${{ env.workspace }}"
-          echo "location: ${{ env.location }}"
-          echo "compute: ${{ env.compute }}"
 jobs:
   unit-test:
     runs-on: ubuntu-latest
