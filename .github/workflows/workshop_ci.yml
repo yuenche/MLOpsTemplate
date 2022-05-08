@@ -9,6 +9,14 @@ on:
     paths:
       - src/workshop/core/**
       - .github/workflows/workshop_ci.yml
+
+env:
+  group: mtcs-ezmldev-rg
+  workspace: ezmldev9aml
+  location: westeurope
+  compute: ezmldev9cxec
+
+
 jobs:
   Workshop-Train-Validation:
     runs-on: ubuntu-latest
