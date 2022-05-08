@@ -1,7 +1,16 @@
 import sys, os
 import mlflow
 from azureml.core import Workspace
+from azureml.core.authentication import AzureCliAuthentication
 
+cli_auth = AzureCliAuthentication()
+
+ws = Workspace(subscription_id="191c696b-4f52-4038-9b9b-27cf6086fa00",
+               resource_group="mtcs-ezmldev-rg",
+               workspace_name="ezmldev9aml",
+               auth=cli_auth)
+
+print("Found workspace {} at location {}".format(ws.name, ws.location))
 #ws = Workspace.from_config()
 
 #print("SDK version:", azureml.core.VERSION)
