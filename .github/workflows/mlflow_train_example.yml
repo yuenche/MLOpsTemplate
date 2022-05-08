@@ -25,6 +25,7 @@ jobs:
           python -m pip install --upgrade twine
           pip install mlflow
           pip install azureml-mlflow 
+          pip install azure-cli-core
       - name: Load .env file
         uses: xom9ikk/dotenv@v1.0.2
         with:
