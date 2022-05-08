@@ -46,11 +46,9 @@ jobs:
           az configure --defaults group=${{ env.group }} workspace=${{ env.workspace }} location=${{ env.location }} 
       - name: Create conda environment
         run: | #setup: provide group, workspace and location
-          conda env create -f src/workshop/mlflow-on-aml/train-projects-remote/conda.yaml
-          conda init bash
-          conda activate mlflow-example          
+          conda env update --file src/workshop/mlflow-on-aml/train-projects-remote/conda.yaml --name base     
       - name: run mlflow project training 
         run: |
-         python src/workshop/mlflow-on-aml/train-projects-remote     
+          python src/workshop/mlflow-on-aml/train-projects-remote     
 
 
