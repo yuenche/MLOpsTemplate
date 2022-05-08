@@ -1,11 +1,12 @@
 # Copyright (c) Microsoft. All rights reserved.
 #  Licensed under the MIT license.
-name: tutorial
+name: mlflow-example
 channels:
   - defaults
+  - anaconda
+  - conda-forge
 dependencies:
-  - numpy>=1.14.3
-  - pandas>=1.0.0
+  - python=3.6
   - scikit-learn=0.19.1
   - pip
   - pip:

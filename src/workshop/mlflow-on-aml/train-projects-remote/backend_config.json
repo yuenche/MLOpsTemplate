@@ -1,4 +1,4 @@
 {
-    "COMPUTE": "cpu-cluster",
+    "COMPUTE": "ezmldev9cxec",
     "USE_CONDA": "True"
 }

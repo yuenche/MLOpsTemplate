@@ -1,0 +1,55 @@
+name: mlflow-ci-train
+on:
+  workflow_dispatch:
+  push:
+    branches: 
+      - mlflow_dev
+    paths:
+      - src/workshop/mlflow-on-aml/**
+      - .github/workflows/mlflow_ci_train.yml
+
+jobs:
+  Workshop-Train-Validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8' # Version range or exact version of a Python version to use, using SemVer's version range syntax test ci
+      - name: Upgrade pip
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade build
+          python -m pip install --upgrade twine
+      - name: Load .env file
+        uses: xom9ikk/dotenv@v1.0.2
+        with:
+          path: src/workshop/env
+          mode: dev
+      - name: show env variables
+        run: |
+          echo "group: ${{ env.group }}"
+          echo "workspace: ${{ env.workspace }}"
+          echo "location: ${{ env.location }}"
+          echo "compute: ${{ env.compute }}"  
+          echo "endpoint: ${{ env.endpoint }}" 
+      - name: AZ Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_YUENCHE }}   #setup: provide your Azure credentials name stored in github
+
+      - name: Install az ml & set default values for AML
+        run: | #setup: provide group, workspace and location
+          az extension add -n ml -y
+          az configure --defaults group=${{ env.group }} workspace=${{ env.workspace }} location=${{ env.location }} 
+      - name: Create conda environment
+        run: | #setup: provide group, workspace and location
+          conda env create -f src/workshop/mlflow-on-aml/train-projects-remote/conda.yaml
+          conda activate mlflow-example
+      - name: run mlflow project training 
+        run: |
+         python src/workshop/mlflow-on-aml/train-projects-remote     
+
+
