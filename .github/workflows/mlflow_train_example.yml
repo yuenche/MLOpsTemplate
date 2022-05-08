@@ -6,7 +6,7 @@ on:
       - mlflow_dev
     paths:
       - src/workshop/mlflow-on-aml/**
-      - .github/workflows/mlflow_ci_train.yml
+      - .github/workflows/mlflow_train_example.yml
 
 jobs:
   MLflow-Train:
