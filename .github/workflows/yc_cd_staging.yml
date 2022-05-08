@@ -34,7 +34,7 @@ jobs:
       - name: Load .env file
         uses: xom9ikk/dotenv@v1.0.2
         with:
-          path: .github/workflows/env
+          path: src/workshop/env
           mode: staging
       - name: show env variables
         run: |
