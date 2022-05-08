@@ -47,7 +47,7 @@ jobs:
       - name: Create conda environment
         run: | #setup: provide group, workspace and location
           conda env create -f src/workshop/mlflow-on-aml/train-projects-remote/conda.yaml
-          conda init
+          conda init bash
           conda activate mlflow-example          
       - name: run mlflow project training 
         run: |
