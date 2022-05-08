@@ -23,6 +23,8 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install --upgrade build
           python -m pip install --upgrade twine
+          pip install mlflow
+          pip install azureml-mlflow 
       - name: Load .env file
         uses: xom9ikk/dotenv@v1.0.2
         with:
@@ -43,10 +45,7 @@ jobs:
       - name: Install az ml & set default values for AML
         run: | #setup: provide group, workspace and location
           az extension add -n ml -y
-          az configure --defaults group=${{ env.group }} workspace=${{ env.workspace }} location=${{ env.location }} 
-      - name: Create conda environment
-        run: | #setup: provide group, workspace and location
-          conda env update --file src/workshop/mlflow-on-aml/train-projects-remote/conda.yaml --name base     
+          az configure --defaults group=${{ env.group }} workspace=${{ env.workspace }} location=${{ env.location }}   
       - name: run mlflow project training 
         run: |
           python src/workshop/mlflow-on-aml/train-projects-remote     
