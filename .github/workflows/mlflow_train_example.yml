@@ -49,6 +49,7 @@ jobs:
           az configure --defaults group=${{ env.group }} workspace=${{ env.workspace }} location=${{ env.location }}   
       - name: run mlflow project training 
         run: |
-          python src/workshop/mlflow-on-aml/train-projects-remote/train-projects-remote.py     
+          cd src/workshop/mlflow-on-aml/train-projects-remote/
+          python train-projects-remote.py     
 
 
