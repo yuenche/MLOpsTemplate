@@ -2,7 +2,7 @@ name: yc-cd-staging
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: [new-ci-train]
+    workflows: [yc-ci-train]
     types:
       - completed
   push:
