@@ -1,4 +1,4 @@
-name: mlflow-ci-train
+name: mlflow-train-example
 on:
   workflow_dispatch:
   push:
@@ -9,7 +9,7 @@ on:
       - .github/workflows/mlflow_ci_train.yml
 
 jobs:
-  Workshop-Train-Validation:
+  MLflow-Train:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -47,7 +47,8 @@ jobs:
       - name: Create conda environment
         run: | #setup: provide group, workspace and location
           conda env create -f src/workshop/mlflow-on-aml/train-projects-remote/conda.yaml
-          conda activate mlflow-example
+          conda init
+          conda activate mlflow-example          
       - name: run mlflow project training 
         run: |
          python src/workshop/mlflow-on-aml/train-projects-remote     
