@@ -9,6 +9,7 @@ on:
       - src/workshop/core/data_engineering/*
       - src/workshop/core/evaluating/*
       - src/workshop/core/training/*
+      - src/workshop/env/*
       - .github/workflows/yc_training_unit_test.yml
 
 jobs:
