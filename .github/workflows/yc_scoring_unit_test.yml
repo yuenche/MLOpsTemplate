@@ -51,13 +51,13 @@ jobs:
             # Create or update endpoint
             { 
                 echo "Creating endpoint with name: ${{ env.endpoint }}" &&
-                az ml online-endpoint create --file src/workshop/core/scoring/endpoint.yml --set endpoint_name=${{ env.endpoint }}
+                az ml online-endpoint create --file src/workshop/core/scoring/endpoint.yml --set name=${{ env.endpoint }}
             } || { 
                 echo "Endpoint ${{ env.endpoint }} already exists"
                 echo "Updating endpoint with name:${{ env.endpoint }}" &&
-                az ml online-endpoint update --file src/workshop/core/scoring/endpoint.yml --set endpoint_name=${{ env.endpoint }}
+                az ml online-endpoint update --file src/workshop/core/scoring/endpoint.yml --set name=${{ env.endpoint }}
             }
-            
+
       - name: create online deployment
         run: |
             az ml online-deployment create --file src/workshop/core/scoring/deployment.yml --set endpoint_name=${{ env.endpoint }}
