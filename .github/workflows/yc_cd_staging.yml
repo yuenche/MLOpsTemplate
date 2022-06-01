@@ -83,7 +83,7 @@ jobs:
         uses: thomaseizinger/create-pull-request@master
         with:
           GITHUB_TOKEN: ${{ secrets.YUENCHE_GITHUB_SECRET }} #setup: provide your github secret name
-          head: ${{ github.ref }}
+          head: ${{ github.event.workflow_run.head_branch }}
           base: main
           title: "An automatically created PR by staging deployment completed to main"
 
