@@ -18,7 +18,9 @@ jobs:
     environment: 'staging'
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          ref: integration
 
       - name: Setup python
         uses: actions/setup-python@v2
@@ -83,7 +85,7 @@ jobs:
         uses: thomaseizinger/create-pull-request@master
         with:
           GITHUB_TOKEN: ${{ secrets.YUENCHE_GITHUB_SECRET }} #setup: provide your github secret name
-          head: ${{ github.ref }}
+          head: refs/heads/integration
           base: main
           title: "An automatically created PR by staging deployment completed to main"
 
