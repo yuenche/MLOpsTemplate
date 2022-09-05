@@ -31,6 +31,7 @@ After learning about how GitHub can be leveraged for MLOps, your team decides to
     > Action Items: Merge the Pull Request created by yc-training-unit-test workflow.
     > - Go to your browser and go to your repository. 
     > - Click on "Pull requests" tab and click on the new PR "An automatically created PR by successful unit test to integration". 
+        >![pr](images/git_pr_screenshot.jpg) 
     > - Reviw the commits into `integration` branch from `yourname-dev`.
     > - Click on "Merge pull request".
     > - Click on "Confirm merge".
