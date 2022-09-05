@@ -73,9 +73,9 @@ Your team wants to learn how to automate and orchestrate common tasks such as en
   
         Note: At this point, it takes about 10 minutes for the pipeline to run.
 
-    > - If all steps pass (you can check the status under the actions in the repository), a new pull request is made to the integration branch. If the workflow fails, there could be a few different reasons, you can open the workflow steps on the actions tab of the repository and examine it. 
+    If all steps pass (you can check the status under the actions in the repository), a new pull request is made to the integration branch. If the workflow fails, there could be a few different reasons, you can open the workflow steps on the actions tab of the repository and examine it. 
     
-7. Optional: Repeat step 2-5 to setup scoring unit test workflow with yc_scoring_unit_test.yml. Please note the trigger settings on "paths". 
+7. Optional: Repeat step 2-5 to setup scoring unit test workflow defined in yc_scoring_unit_test.yml and . Please note the trigger settings on "paths". 
 
 
 ## The CI CD Workflow is shown below:
