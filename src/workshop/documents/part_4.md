@@ -12,27 +12,7 @@ After learning about how GitHub can be leveraged for MLOps, your team decides to
 
     > Action Item: Update resource group name, workspace name, location, Azure Secret and Github Secret inside yc_ci_train.yml file.
 
-2. Now Let's consider a common scenario in a ML development team. One of the team members is going to work on a new feature (examples can be changes to feature engineering, hyper-parameter selection, type of the model, etc). For this work, a common pattern is to first fork and clone the repository on your local machine (which you already have done in Step 0).  Then you need to switch to the ```yourname-dev``` local branch which you created in step 3.
-
-    > Action Item: Run the following command to switch to ```yourname-dev``` branch
-    ```bash
-    git checkout yourname-dev
-    ```
-    This takes you to yourname-dev branch, so your current working branch is set to yourname-dev. 
-
-    > Action Item: Run the following command to ensure you are in the correct branch.  
-    ```bash
-    git branch
-    ```
-    > Note: Hopefully "yourname-dev" branch is colored green with a * next to it.
-
-3. In this step we want to make some changes to our ML code, locate and open the following file: ```/src/workshop/core/training/ml_training.py```
-
-    >Action Item: Update `ml_training.py`, you can search for #setup and modify `alpha` to: `model = Ridge(alpha=100)`
-
-    The default for the model is set to 100,000. By updating alpha we think it will improve the model performance, let's find out! Make sure to save the changes to the file. Now we want to commit these changes to the local branch and push them to our github repository. This will update the remote github branch on the repository.
-
-4. Approve and merge the Pull Request created in Part_4 to integration branch. This will trigger the training in  yc_ci_train workflow.
+2. Approve and merge the Pull Request created in Part_4 to integration branch. This will trigger the training in  yc_ci_train workflow.
 
     >Action Items: Merge the Pull Request created by yc_training_unit_test workflow.
     >- Go to your browser and go to your repository. 
@@ -43,7 +23,7 @@ After learning about how GitHub can be leveraged for MLOps, your team decides to
     
     As a reminder, integration branch is a branch which is as up to date as the main branch but we use it to train the model. Here we made some changes to the model, and we want to train and evaluate the new model. If the evaluation fails, it won't trigger the CD process and making changes to the main branch where our production code lives.
 
-6. The merge to the integration branch triggers the yc-ci-train workflow. Click on the Actions tab on your repository and you will see CI workflow running after a few minutes. Click and examine all the steps, note that the CI Workflow is running following the steps in the ```yc-ci-train.yml``` file which you located earlier. Note that in the first few lines of this file we have defined the workflow to be triggered when a pull request is merged in the "integration" branch.
+3. The merge to the integration branch triggers the yc-ci-train workflow. Click on the Actions tab on your repository and you will see CI workflow running after a few minutes. Click and examine all the steps, note that the CI Workflow is running following the steps in the ```yc-ci-train.yml``` file which you located earlier. Note that in the first few lines of this file we have defined the workflow to be triggered when a pull request is merged in the "integration" branch.
 
     The CI workflow has multiple steps, including setting up python version, installing libraries needed, logging in to Azure and running the training model pipeline and evaluating the model. As a part of this workflow, the updated model from our current changes is compared to our best previous model and if it performs better it passes the evaluation step (more details below).
 
