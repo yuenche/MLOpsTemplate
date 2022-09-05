@@ -19,24 +19,26 @@ Your team wants to learn how to automate and orchestrate common tasks such as en
     ```bash
     git checkout yourname-dev
     ```
-2. Configure the viariables for development enviroment in `src/workshop/env/.env.dev`.
+   
+2. Create an automated unit test task that will be triggered by pushing the code to your development/feature branch. Let's use the ```Feature_Engineering``` module as the automated unit test to run to make sure the module performs correctly.
 
-    > - `group`: resource group of the AML dev workspace.
-    > - `workspace`: the AML dev workspace.
-    > - `location`: the location of the AML dev workspace.
-    > - `compute`: the name of the compute cluster in dev.
-    > - `endpoint`: the name of the model endpoint in dev.
-    > - `model`: the model name.
-    
-3. Create an automated unit test task that will be triggered by pushing the code to your development/feature branch. Let's use the ```Feature_Engineering``` module as the automated unit test to run to make sure the module performs correctly.
-
-    > Action Items: Update the `yc_training_unit_test.yml` file with your secret credentials. Replace the resource group, workspace and location with your specific details.
+    > Action Items: Update the `yc_training_unit_test.yml` file with your secret credentials. 
     > - Locate the file named `yc_training_unit_test.yml` in the `.github/workflows` folder
     > - Make the following updates to the file: 
     >     - Update the secret name by replacing the ```MY_AZURE_CREDENTIALS``` to match the GitHub secret name for your Service Principal that was created in Part 0. (It most likely has a name similar to ```AZURE_CREDENTIALS_USERNAME```.)
-    >     - Update `GROUP`, `NAME`, and `LOCATION` with the specific names of your resource group, workspace, and location created in Part 0.
+    
+    Workflows in yc_training_unit_test.yml loads environment viariables from .env files.
 
-4. Next, review the contents in the ```yc_training_unit_test.yml``` file to understand the steps and how it is being triggered.
+    > Action Items: Configure the viariables for development enviroment in `src/workshop/env/.env.dev`
+
+    > - group: resource group of the AML dev workspace.
+    > - workspace: the AML dev workspace.
+    > - location: the location of the AML dev workspace.
+    > - compute: the name of the compute cluster in dev.
+    > - endpoint: the name of the model endpoint in dev. This name needs to be unique within the region you are deploying into as the endpoint name is part of the endpoint URI.
+    > - model: the model name.
+
+3. Next, review the contents in the ```yc_training_unit_test.yml``` file to understand the steps and how it is being triggered.
 
     - Review the trigger defined in the `on:` section to see how this workflow is being run automatically
         - The `workflow_dispatch` allows the workflow to be run manually which can be useful when testing.
@@ -46,20 +48,20 @@ Your team wants to learn how to automate and orchestrate common tasks such as en
         - Logs into Azure
         - Creates an AML job to run the AML training pipeline using the [custom action](../../../.github/actions/aml-job-create/action.yaml) and the existing [training pipeline job file](../core/pipelines/training_pipeline.yml)
 
-5. Make changes to the `training_pipeline.yml` file to ensure job will run successful
+4. Make changes to the `training_pipeline.yml` file to ensure job will run successful
     > Note: you may have done this in part 2, but still check the file to make sure.
 
     > Action Items:
     > - Locate the file named ```training_pipeline.yml``` in the ```src/workshop/core/pipelines``` folder
     > - Replace the compute cluster name under `compute` with your specific compute cluster name
 
-6. Now Let's consider a common scenario in a ML development team. One of the team members is going to work on a new feature (examples can be changes to feature engineering, hyper-parameter selection, type of the model, etc). Let's to make some changes to our ML code, locate and open the following file: ```/src/workshop/core/training/ml_training.py```
+5. Now Let's consider a common scenario in a ML development team. One of the team members is going to work on a new feature (examples can be changes to feature engineering, hyper-parameter selection, type of the model, etc). Let's to make some changes to our ML code, locate and open the following file: ```/src/workshop/core/training/ml_training.py```
 
     >Action Item: Update `ml_training.py`, you can search for #setup and modify `alpha` to: `model = Ridge(alpha=100)`
 
     The default for the model is set to 100,000. By updating alpha we think it will improve the model performance, let's find out! Make sure to save the changes to the file. Now we want to commit these changes to the local branch and push them to our github repository. This will update the remote github branch on the repository.
     
-7. Now that the necessary changes have been made, the changes can be pushed to your feature branch which will trigger the yc_training_unit_test workflow.
+6. Now that the necessary changes have been made, the changes can be pushed to your feature branch which will trigger the yc_training_unit_test workflow.
 
     > Action Items:
     > - Run the following commands in sequence to stage changes, commit them, and then push them to your repo:
