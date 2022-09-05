@@ -18,27 +18,14 @@ The goal of this section is to build a CD pipeline to:
 
 ## Steps
 
-
-
-2. The CD workflows are defined in `.github/workflows/yc_cd_staging.yml` and `.github/workflows/yc_cd_prod.yml`. Both rely on the Azure CLI to control the infrastructure and implement the automation of the model deployments. Therefore, we need to setup this workflow to login to Azure via a Service Principal to be able to leverage the Azure CLI.
+1. The CD workflows are defined in `.github/workflows/yc_cd_staging.yml` and `.github/workflows/yc_cd_prod.yml`. Both rely on the Azure CLI to control the infrastructure and implement the automation of the model deployments. Therefore, we need to setup this workflow to login to Azure via a Service Principal to be able to leverage the Azure CLI.
 
     > Action Items:
     > 1. Open up the `yc_cd_staging.yml` and `yc_cd_prod.yml` file in your repo (.github/workflow location)
     > 2. Update the 'creds: ${{ secrets...' section in this file to setup your secret name. Follow the instructions in this file annotated with #setup.triggers as part of a GitHub Actions workflow. 
 
-3. Please review the workflow files to understand how we've establised a trigger mechanism to enable a deployment of code that has succesfully passed CI, and is ready to be deployed to staging and production.
 
-   The triggers of deployment to staging `yc_cd_staging.yml`:
-   - The completion of workflow `yc-ci-train`
-   - Push to `integration` branch with path filter
-   - 'workflow_dispatch': this enables to run the CD pipeline on demand from the GitHub UI as this will greatly facilitate testing. In practice you would eventually remove this trigger type and fully depend on the rest of the automation.
-
-
-   The triggers of deployment to production `yc_cd_prod.yml`:
-   - Push to `main` branch
-   - 'workflow_dispatch'
-
-4. We will now configure our Azure ML deployments, and the GitHub workflow which will automate these deployments.
+3. We will now configure our Azure ML deployments, and the GitHub workflow which will automate these deployments.
 
     - Two files control your Azure ML deployments:
         - `/core/scoring/endpoint.yml`: this is your endpoint.
@@ -56,10 +43,6 @@ The goal of this section is to build a CD pipeline to:
     > - `endpoint`: the name of the model endpoint in production. This name needs to be unique within the region you are deploying into as the endpoint name is part of the endpoint URI.
     > - `model`: the model name.
 
-    > Action Item:
-    >- Edit `workshop_cd.yml` to setup your Azure resource group name and Azure ML workspace name which are being passed as parameters to a set of custom GitHub Actions. Look for #setup and follow the instructions in the file.
-    
-
     As you've now noticed, 3 actions control the overall CD flow at the end of the workflow definition. Let's have a look into them in more details, feel free to open their code and review how this logic has been implemented. The key considerations for each file are as follow:
     - `.github/actions/aml-endpoint-deploy/action.yaml`: this action does quite a few things:
         - Creates an endpoint if it doesn't exist yet using your endpoint.yml definition.
@@ -73,10 +56,24 @@ The goal of this section is to build a CD pipeline to:
         - Read the endpoint to see which deployment is at 0% vs 100%
         - Operates a traffic update operation to swap around the traffic routing and effectively enabling the latest model version to support 100% of the traffic, i.e. becoming 'production'.
 
-    > Action Items:
-    > 1. Commit your configuration changes and push them up to github in your own development branch. 
-    > 2. Go to the GitHub UI under 'Actions', and select 'workshop_cd', and trigger it to run now on your own branch.
-    > 3. Once triggered, click on it to open up the details and monitor its execution.
+2. Now we are ready to run the workflows to deploy the new model generated from yc-ci-train. Please review workflow file `yc_cd_staging.yml` and `yc_cd_prod.yml` to understand how we've establised a trigger mechanism to enable a deployment of code that has succesfully passed CI, and is ready to be deployed to staging and production.
+
+   The triggers of deployment to staging `yc_cd_staging.yml`:
+   - The completion of workflow `yc-ci-train`
+   - Push to `integration` branch with path filter
+   - 'workflow_dispatch': this enables to run the CD pipeline on demand from the GitHub UI as this will greatly facilitate testing. In practice you would eventually remove this trigger type and fully depend on the rest of the automation.
+
+   The triggers of deployment to production `yc_cd_prod.yml`:
+   - Push to `main` branch
+   - 'workflow_dispatch'
+
+   Let's trigger the CD workflows manually in this exercise.     
+   > Action Items:
+    > 1. Go to the GitHub UI under 'Actions', and select 'yc-cd-staging', and trigger it to run now on 'integration' branch.
+    > 2. Once triggered, click on it to open up the details and monitor its execution.
+    > 3. A new Pull Request is created to 'main' branch when deployment to staging is tested successful.
+    > 4. Merge the Pull Request and trigger the yc-cd-prod workflow
+    > 5. Once triggered, click on it to open up the details and monitor its execution.
 
     > Note: Run this one more time at least to observe the entire flow and the 'swap' of deployments happening automatically with each green/blue swap alternating between supporting 0% of the traffic and 100% of the traffic as they get 'pushed to production'.
 
