@@ -65,6 +65,10 @@ Your team wants to learn how to automate and orchestrate common tasks such as en
         > Note: `git status` shows the files that have been modified. It is useful for seeing the latest status of the files, but isn't necessary to commit changes.
 
     > - Check to see if the workflow was properly triggered by going to your github repo and selecting the Actions tab.
+  
+        Note: At this point, it takes about 10 minutes for the pipeline to run.
+
+    > - If all steps pass (you can check the status under the actions in the repository), a new pull request is made to the integration branch. If the workflow fails, there could be a few different reasons, you can open the workflow steps on the actions tab of the repository and examine it. 
     
 6. Optional: Repeat step 2-5 to setup scoring unit test workflow with yc_scoring_unit_test.yml. Please note the trigger settings on "paths". 
 
