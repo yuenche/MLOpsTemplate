@@ -66,7 +66,7 @@ Your team wants to learn how to automate and orchestrate common tasks such as en
 
     > - Check to see if the workflow was properly triggered by going to your github repo and selecting the Actions tab.
     
-6. Repeat step 2-5 to setup scoring unit test workflow with yc_scoring_unit_test.yml. Please note the trigger settings on "paths". 
+6. Optional: Repeat step 2-5 to setup scoring unit test workflow with yc_scoring_unit_test.yml. Please note the trigger settings on "paths". 
 
 
 ## The CI CD Workflow is shown below:
