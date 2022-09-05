@@ -67,7 +67,7 @@ Your team wants to learn how to automate and orchestrate common tasks such as en
     > - Check to see if the workflow was properly triggered by going to your github repo and selecting the Actions tab.
 
 ## The CI CD Workflow is shown below:
-![pipeline](images/part3cicd.png)
+![pipeline](images/mlops_workflow_example1.jpeg)
 
 ## Success criteria
 - A feature or development branch was created to track your changes
