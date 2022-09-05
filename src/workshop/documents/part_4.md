@@ -12,14 +12,23 @@ After learning about how GitHub can be leveraged for MLOps, your team decides to
 
     > Action Item: Update resource group name, workspace name, location, Azure Secret and Github Secret inside yc_ci_train.yml file.
 
-2. Approve and merge the Pull Request created in Part_4 to integration branch. This will trigger the training in  yc_ci_train workflow.
+2. Configure the viariables for development enviroment in `src/workshop/env/.env.staging`.
 
-    >Action Items: Merge the Pull Request created by yc_training_unit_test workflow.
-    >- Go to your browser and go to your repository. 
-    >- Click on "pull requests" tab and click on the new PR "An automatically created PR by successful unit test to integration". 
-    >- Reviw the commits into `integration` branch from `yourname-dev`.
-    >- Click on "Merge pull request".
-    >- Click on "Confirm merge".
+    > - `group`: resource group of the AML staging workspace.
+    > - `workspace`: the AML staging workspace.
+    > - `location`: the location of the AML staging workspace.
+    > - `compute`: the name of the compute cluster in staging.
+    > - `endpoint`: the name of the model endpoint in staging.
+    > - `model`: the model name.
+
+2. Approve and merge the Pull Request created in Part_4 to integration branch. This will trigger the training in yc_ci_train workflow.
+
+    > Action Items: Merge the Pull Request created by yc_training_unit_test workflow.
+    > - Go to your browser and go to your repository. 
+    > - Click on "pull requests" tab and click on the new PR "An automatically created PR by successful unit test to integration". 
+    > - Reviw the commits into `integration` branch from `yourname-dev`.
+    > - Click on "Merge pull request".
+    > - Click on "Confirm merge".
     
     As a reminder, integration branch is a branch which is as up to date as the main branch but we use it to train the model. Here we made some changes to the model, and we want to train and evaluate the new model. If the evaluation fails, it won't trigger the CD process and making changes to the main branch where our production code lives.
 
