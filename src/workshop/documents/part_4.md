@@ -48,7 +48,6 @@ After learning about how GitHub can be leveraged for MLOps, your team decides to
 ## Success criteria
 - Trigger CI workflow when a pull request is merged to the integration branch
 - Successfully run the CI workflow which also includes the AML pipeline
-- Create a Pull Request to the main branch if new code results in higher performing model
 
 ## Reference materials
 
