@@ -56,7 +56,7 @@
 - 2.1 From the new browser tab, go to [Github](https://github.com/) and login to your account.
     > Note: If you don't have an account for Github, please sign up. The workshop can't be done without a Github account.
 
-- 2.2 After the login, go to [https://github.com/microsoft/MLOpsTemplate](https://github.com/microsoft/MLOpsTemplate) and click `Fork`.
+- 2.2 After the login, go to [github.com/yuenche/MLOpsTemplate](https://github.com/yuenche/MLOpsTemplate) and click `Fork`.
     ![](./images/run_mlopsworkshop_azcli009.png)
 
     > Note: You will have the same repository (`MLOpsTemplate`) under your Github account name.
