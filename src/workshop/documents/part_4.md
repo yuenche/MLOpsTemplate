@@ -8,24 +8,29 @@ After learning about how GitHub can be leveraged for MLOps, your team decides to
 
 ## Steps:
 
-1. Locate the CI pipeline template under ```.github/workflows/yc_ci_train.yml``` and add all the needed information for resource group name, workspace name, location and secrets for Azure and Github. They are all tagged with ```#setup```. 
+1. CI pipeline template is defined in ```.github/workflows/yc_ci_train.yml```. We need to configure the secrets and environment variables (the training pipeline runs in staging environment) 
 
-    > Action Item: Update resource group name, workspace name, location, Azure Secret and Github Secret inside yc_ci_train.yml file.
+    > Action Items: Update the `yc_ci_train.yml` file with your secret credentials. 
+    > - Locate the file named `yc_training_unit_test.yml` in the `.github/workflows` folder
+    > - Make the following updates to the file: 
+    >     - Update the secret name by replacing the ```MY_AZURE_CREDENTIALS``` to match the GitHub secret name for your Service Principal that was created in Part 0. (It most likely has a name similar to ```AZURE_CREDENTIALS_USERNAME```.)
+    
+    Workflows in yc_ci_train.yml loads environment viariables from .env files.
 
-2. Configure the viariables for development enviroment in `src/workshop/env/.env.staging`.
-
+    > Action Items: Configure the variables for development enviroment in `src/workshop/env/.env.staging`
     > - `group`: resource group of the AML staging workspace.
     > - `workspace`: the AML staging workspace.
     > - `location`: the location of the AML staging workspace.
     > - `compute`: the name of the compute cluster in staging.
-    > - `endpoint`: the name of the model endpoint in staging.
+    > - `endpoint`: the name of the model endpoint in staging. This name needs to be unique within the region you are deploying into as the endpoint name is part of the endpoint URI.
     > - `model`: the model name.
 
-2. Approve and merge the Pull Request created in Part_4 to integration branch. This will trigger the training in yc_ci_train workflow.
 
-    > Action Items: Merge the Pull Request created by yc_training_unit_test workflow.
+2. Approve and merge the Pull Request created in Part_4 to integration branch. This will trigger the training in yc-ci-train workflow.
+
+    > Action Items: Merge the Pull Request created by yc-training-unit-test workflow.
     > - Go to your browser and go to your repository. 
-    > - Click on "pull requests" tab and click on the new PR "An automatically created PR by successful unit test to integration". 
+    > - Click on "Pull requests" tab and click on the new PR "An automatically created PR by successful unit test to integration". 
     > - Reviw the commits into `integration` branch from `yourname-dev`.
     > - Click on "Merge pull request".
     > - Click on "Confirm merge".
