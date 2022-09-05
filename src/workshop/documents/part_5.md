@@ -99,7 +99,7 @@ The goal of this section is to build a CD pipeline to:
     > 2. Observe the status of the Pull Request to main: it should have triggered the CD run (based on the workshop_cd.yml triggers definition), and there should be a rule that prevents merging the Pull Request until the CD workflow completes succesfully.
 
 6. You can also implement a manual gate to introduce manual approval process prior to production deployment. It can be done by setting environment protection rules in GitHub. Please follow the [guide](https://cloudlumberjack.com/posts/github-actions-approvals/). 
-[Environment protection example:](images/github_env_protection.jpeg)
+![Environment protection example:](images/github_env_protection.jpeg)
 
 
 ## Success criteria
