@@ -15,9 +15,9 @@ After learning about how GitHub can be leveraged for MLOps, your team decides to
     > - Make the following updates to the file: 
     >     - Update the secret name by replacing the ```MY_AZURE_CREDENTIALS``` to match the GitHub secret name for your Service Principal that was created in Part 0. (It most likely has a name similar to ```AZURE_CREDENTIALS_USERNAME```.)
     
-    Workflows in yc_ci_train.yml loads environment viariables from .env files.
+    Workflow in `yc_ci_train.yml` loads environment variables from .env files.
 
-    > Action Items: Configure the variables for development enviroment in `src/workshop/env/.env.staging`
+    > Action Items: Configure the variables for development environment in `src/workshop/env/.env.staging`
     > - `group`: resource group of the AML staging workspace.
     > - `workspace`: the AML staging workspace.
     > - `location`: the location of the AML staging workspace.
@@ -32,7 +32,7 @@ After learning about how GitHub can be leveraged for MLOps, your team decides to
     > - Go to your browser and go to your repository. 
     > - Click on "Pull requests" tab and click on the new PR "An automatically created PR by successful unit test to integration". 
         >![pr](images/git_pr_screenshot.jpg) 
-    > - Reviw the commits into `integration` branch from `yourname-dev`.
+    > - Review the commits into `integration` branch from `yourname-dev`.
     > - Click on "Merge pull request".
     > - Click on "Confirm merge".
     
