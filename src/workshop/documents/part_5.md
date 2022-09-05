@@ -35,8 +35,8 @@ The goal of this section is to build a CD pipeline to:
 
     You can have as many deployments as you want behind an endpoint. The endpoint traffic routing enables you to control which parts of the traffic to the endpoint gets routed to which deployment. In this workshop, we take the blue/green approach where we'll have 2 deployments (named green and blue respectively), which will take turn playing the role of production/staging. We only have one deployment file define though, as we automatically override the name of the deployment as part of a custom GitHub action which we'll review later in this section.
     
-    Workflows in `yc_cd_staging.yml` and `yc_cd_prod.yml` load environment viariables from .env files.  
-    > Action Items: Configure the viariables for development enviroment in `src/workshop/env/.env.prod`. (You have already configured `src/workshop/env/.env.staging` in Part_4 )
+    Workflows in `yc_cd_staging.yml` and `yc_cd_prod.yml` load environment variables from .env files.  
+    > Action Items: Configure the variables for development enviroment in `src/workshop/env/.env.prod`. (You have already configured `src/workshop/env/.env.staging` in Part_4 )
     > - `group`: resource group of the AML production workspace.
     > - `workspace`: the AML production workspace.
     > - `location`: the location of the AML production workspace.
@@ -98,7 +98,7 @@ The goal of this section is to build a CD pipeline to:
     > 1. Create a pull request from integration to main (if you have no changes in integration, first commit a simple change in your own dev branch by adding a comment to the score.py script for instance), and bring this over to integration via a Pull Request from your dev branch to integration. Once the CI workflow has completed, a Pull Request from integration to main will be automatically created.
     > 2. Observe the status of the Pull Request to main: it should have triggered the CD run (based on the workshop_cd.yml triggers definition), and there should be a rule that prevents merging the Pull Request until the CD workflow completes succesfully.
 
-6. You can also implement a manual gate to introduce manual approval process prior to production deployment. It can be done by setting environment protection rules in GitHub. Please follow the [guide](https://cloudlumberjack.com/posts/github-actions-approvals/)
+6. You can also implement a manual gate to introduce manual approval process prior to production deployment. It can be done by setting environment protection rules in GitHub. Please follow the [guide](https://cloudlumberjack.com/posts/github-actions-approvals/). 
 
 
 
