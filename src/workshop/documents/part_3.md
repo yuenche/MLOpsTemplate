@@ -31,12 +31,12 @@ Your team wants to learn how to automate and orchestrate common tasks such as en
 
     > Action Items: Configure the viariables for development enviroment in `src/workshop/env/.env.dev`
 
-    > - group: resource group of the AML dev workspace.
-    > - workspace: the AML dev workspace.
-    > - location: the location of the AML dev workspace.
-    > - compute: the name of the compute cluster in dev.
-    > - endpoint: the name of the model endpoint in dev. This name needs to be unique within the region you are deploying into as the endpoint name is part of the endpoint URI.
-    > - model: the model name.
+    > - `group`: resource group of the AML dev workspace.
+    > - `workspace`: the AML dev workspace.
+    > - `location`: the location of the AML dev workspace.
+    > - `compute`: the name of the compute cluster in dev.
+    > - `endpoint`: the name of the model endpoint in dev. This name needs to be unique within the region you are deploying into as the endpoint name is part of the endpoint URI.
+    > - `model`: the model name.
 
 3. Next, review the contents in the ```yc_training_unit_test.yml``` file to understand the steps and how it is being triggered.
 
