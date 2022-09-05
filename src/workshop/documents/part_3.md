@@ -32,7 +32,7 @@ Your team wants to learn how to automate and orchestrate common tasks such as en
 
     - Review the trigger defined in the `on:` section to see how this workflow is being run automatically
         - The `workflow_dispatch` allows the workflow to be run manually which can be useful when testing.
-        - The remaining lines highlight what is going to automatically trigger the workflow. It is being triggered on a push to any branch that is not `main` or `integration`. The changes in the push are also filtered to only include changes made to the `feature_engineering` module. 
+        - The remaining lines highlight what is going to automatically trigger the workflow. It is being triggered on a push to any branch that is not `main` or `integration`. The changes in the push are also filtered to only include changes made to the `data_engineering`, `evaluation`, `training` module. 
     -  Review the job starting at the `jobs:` section that has been created already and does the following steps:
         - Checks out the repo
         - Logs into Azure
