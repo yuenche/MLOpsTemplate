@@ -77,6 +77,7 @@ Your team wants to learn how to automate and orchestrate common tasks such as en
 - Trigger was created on the workflow file ```yc_training_unit_test.yml``` to run on a push to your feature branch
 - Understand the additional updates that were made both the ```yc_training_unit_test.yml``` and ```feature_engineering.yml``` file for it to use your secrets and AML resources
 - Workflow was successfully triggered by pushing changes to your feature branch
+- A new Pull Request from the feature branch to integration branch will be generated if the unit test succeeds.  
 
 ## Reference materials
 - [GitHub Actions](https://github.com/features/actions)
