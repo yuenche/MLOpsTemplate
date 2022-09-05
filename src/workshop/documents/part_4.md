@@ -8,9 +8,9 @@ After learning about how GitHub can be leveraged for MLOps, your team decides to
 
 ## Steps:
 
-1. Locate the CI pipeline template under ```.github/workflows/workshop_ci.yml``` and add all the needed information for resource group name, workspace name, location and secrets for Azure and Github. They are all tagged with ```#setup```. 
+1. Locate the CI pipeline template under ```.github/workflows/yc_ci_train.yml``` and add all the needed information for resource group name, workspace name, location and secrets for Azure and Github. They are all tagged with ```#setup```. 
 
-    > Action Item: Update resource group name, workspace name, location, Azure Secret and Github Secret inside workshop_ci.yml file.
+    > Action Item: Update resource group name, workspace name, location, Azure Secret and Github Secret inside yc_ci_train.yml file.
 
 2. Now Let's consider a common scenario in a ML development team. One of the team members is going to work on a new feature (examples can be changes to feature engineering, hyper-parameter selection, type of the model, etc). For this work, a common pattern is to first fork and clone the repository on your local machine (which you already have done in Step 0).  Then you need to switch to the ```yourname-dev``` local branch which you created in step 3.
 
@@ -60,7 +60,7 @@ After learning about how GitHub can be leveraged for MLOps, your team decides to
 
     This creates a pull request to the integration branch and merges it. As a reminder, integration branch is a branch which is as up to date as the main branch but we use it to evaluate the new feature. Here we made some changes to the model, and we want to make sure the new model passes the evaluation. If not,it will stop us from going to the CD process and making changes to the main branch where our production code lives.
 
-6. The merge to the integration branch triggers the workshop_ci workflow. Click on the Actions tab on your repository and you will see CI workflow running after a few minutes. Click and examine all the steps, note that the CI Workflow is running following the steps in the ```workshop_ci.yml``` file which you located earlier. Note that in the first few lines of this file we have defined the workflow to be triggered when a pull request is merged in the "integration" branch.
+6. The merge to the integration branch triggers the yc-ci-train workflow. Click on the Actions tab on your repository and you will see CI workflow running after a few minutes. Click and examine all the steps, note that the CI Workflow is running following the steps in the ```yc-ci-train.yml``` file which you located earlier. Note that in the first few lines of this file we have defined the workflow to be triggered when a pull request is merged in the "integration" branch.
 
     The CI workflow has multiple steps, including setting up python version, installing libraries needed, logging in to Azure and running the training model pipeline and evaluating the model. As a part of this workflow, the updated model from our current changes is compared to our best previous model and if it performs better it passes the evaluation step (more details below).
 
