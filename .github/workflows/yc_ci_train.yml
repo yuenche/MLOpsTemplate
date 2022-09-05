@@ -41,7 +41,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS_YUENCHE }}   #setup: provide your Azure credentials name stored in github
 
       - name: Install az ml & set default values for AML
-        run: | #setup: provide group, workspace and location
+        run: | 
           az extension add -n ml -y
           az configure --defaults group=${{ env.group }} workspace=${{ env.workspace }} location=${{ env.location }} 
       - name: run training and model validation

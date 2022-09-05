@@ -1,4 +1,4 @@
-name: yc_training_unit_test
+name: yc-training-unit-test
 on:
   workflow_dispatch:
   push:
@@ -45,7 +45,7 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS_YUENCHE }} # SETUP: replace MY_AZURE_CREDENTIALS with your own secret name  
       - name: Install AZ ML and tools
-        run: | # SETUP line 33 to point to your own AML workspace
+        run: | 
           az extension add -n ml -y
           az configure --defaults group=${{ env.group }} workspace=${{ env.workspace }} location=${{ env.location }} 
       - name: run training and model validation
