@@ -15,6 +15,7 @@ The goal of this section is to build a CD pipeline to:
     > - Test the deployment to the endpoint of the new model.
     > - On success of test, swap the deployment to accept 100% of the service endpoint traffic (and therefore become 'production').
 - Add a Branch Protection rule in GitHub.
+- Introduce Manual Gate to production environment 
 
 ## Steps
 
@@ -25,7 +26,7 @@ The goal of this section is to build a CD pipeline to:
     > 2. Update the 'creds: ${{ secrets...' section in this file to setup your secret name. Follow the instructions in this file annotated with #setup.triggers as part of a GitHub Actions workflow. 
 
 
-3. We will now configure our Azure ML deployments, and the GitHub workflow which will automate these deployments.
+2. We will now configure our Azure ML deployments, and the GitHub workflow which will automate these deployments.
 
     - Two files control your Azure ML deployments:
         - `/core/scoring/endpoint.yml`: this is your endpoint.
@@ -56,7 +57,7 @@ The goal of this section is to build a CD pipeline to:
         - Read the endpoint to see which deployment is at 0% vs 100%
         - Operates a traffic update operation to swap around the traffic routing and effectively enabling the latest model version to support 100% of the traffic, i.e. becoming 'production'.
 
-2. Now we are ready to run the workflows to deploy the new model generated from yc-ci-train. Please review workflow file `yc_cd_staging.yml` and `yc_cd_prod.yml` to understand how we've establised a trigger mechanism to enable a deployment of code that has succesfully passed CI, and is ready to be deployed to staging and production.
+4. Now we are ready to run the workflows to deploy the new model generated from yc-ci-train. Please review workflow file `yc_cd_staging.yml` and `yc_cd_prod.yml` to understand how we've establised a trigger mechanism to enable a deployment of code that has succesfully passed CI, and is ready to be deployed to staging and production.
 
    The triggers of deployment to staging `yc_cd_staging.yml`:
    - The completion of workflow `yc-ci-train`
@@ -77,7 +78,7 @@ The goal of this section is to build a CD pipeline to:
 
     > Note: Run this one more time at least to observe the entire flow and the 'swap' of deployments happening automatically with each green/blue swap alternating between supporting 0% of the traffic and 100% of the traffic as they get 'pushed to production'.
 
-4. The last step to control CD is to setup a GitHub branch protection rule to require a succesful CD run to be able to merge any code into 'main'. This important point will guarantees that the 'main' branch only accepts stable code (and therefore model as an artifact of this code) that has been succesfully rolled to production goes to 'main'. This 'main' branch is therefore always reflecting what's actually in production.
+5. The last step to control CD is to setup a GitHub branch protection rule to require a succesful CD run to be able to merge any code into 'main'. 
 
     GitHub offers up an easy way to define such policy.
 
@@ -88,7 +89,7 @@ The goal of this section is to build a CD pipeline to:
     >     - Branch name pattern: main
     >     - Require a pull request before merging: CHECK
     >     - Require status checks to pass before merging: CHECK
-    >     - Status checks that are required: type-in 'Workshop-Deployment' in the search box and select it (it should auto-complete). This name is the job name defined in the workshop_cd.yml file.
+    >     - Status checks that are required: type-in 'yc-cd-staging' in the search box and select it (it should auto-complete). This name is the job name defined in the yc_cd_staging.yml file.
     >     - Click Save Changes to enable this rule on your repo.
 
     You can easily test this rule by creating a pull request to main from integration.
@@ -97,9 +98,13 @@ The goal of this section is to build a CD pipeline to:
     > 1. Create a pull request from integration to main (if you have no changes in integration, first commit a simple change in your own dev branch by adding a comment to the score.py script for instance), and bring this over to integration via a Pull Request from your dev branch to integration. Once the CI workflow has completed, a Pull Request from integration to main will be automatically created.
     > 2. Observe the status of the Pull Request to main: it should have triggered the CD run (based on the workshop_cd.yml triggers definition), and there should be a rule that prevents merging the Pull Request until the CD workflow completes succesfully.
 
+6. You can also implement a manual gate to introduce manual approval process prior to production deployment. It can be done by setting environment protection rules in GitHub. Please follow the [guide](https://cloudlumberjack.com/posts/github-actions-approvals/)) 
+
+
+
 ## Success criteria
 
-- The CD pipeline runs sucessfully each time a PR request to 'main' is opened. Please test this by triggering a new CI run (which on success should generate a PR to main), or creating your own PR to main.
+- The CD pipeline runs sucessfully each time a CI training workflow completes. Please test this by triggering a new CI run or trigger the workflow manually.
 - Each CD run updates the deployment which is currently at 0%, and then swaps it to 100% once tested properly via the CD test custom action.
 
 ## Reference materials
