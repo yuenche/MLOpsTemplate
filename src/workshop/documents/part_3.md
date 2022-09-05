@@ -20,7 +20,6 @@ Your team wants to learn how to automate and orchestrate common tasks such as en
     git checkout yourname-dev
     ```
 
-
 2. Create an automated unit test task that will be triggered by pushing the code to your development/feature branch. Let's use the ```Feature_Engineering``` module as the automated unit test to run to make sure the module performs correctly.
 
     > Action Items: Update the `yc_training_unit_test.yml` file with your secret credentials. Replace the resource group, workspace and location with your specific details.
@@ -39,14 +38,20 @@ Your team wants to learn how to automate and orchestrate common tasks such as en
         - Logs into Azure
         - Creates an AML job to run feature engineering module using the [custom action](../../../.github/actions/aml-job-create/action.yaml) and the existing [feature engineering job file](../core/data_engineering/feature_engineering.yml)
 
-4. Make changes to the `feature_engineering.yml` file to ensure job will run successful
+4. Make changes to the `training_pipeline.yml` file to ensure job will run successful
     > Note: you may have done this in part 2, but still check the file to make sure.
 
     > Action Items:
-    > - Locate the file named ```feature_engineering.yml``` in the ```src/workshop/core/data_engineering``` folder
+    > - Locate the file named ```training_pipeline.yml``` in the ```src/workshop/core/pipelines``` folder
     > - Replace the compute cluster name under `compute` with your specific compute cluster name
 
-5. Now that the necessary changes have been made, the changes can be pushed to your feature branch which will trigger the yc_training_unit_test workflow.
+5. Now Let's consider a common scenario in a ML development team. One of the team members is going to work on a new feature (examples can be changes to feature engineering, hyper-parameter selection, type of the model, etc). Let's to make some changes to our ML code, locate and open the following file: ```/src/workshop/core/training/ml_training.py```
+
+    >Action Item: Update `ml_training.py`, you can search for #setup and modify `alpha` to: `model = Ridge(alpha=100)`
+
+    The default for the model is set to 100,000. By updating alpha we think it will improve the model performance, let's find out! Make sure to save the changes to the file. Now we want to commit these changes to the local branch and push them to our github repository. This will update the remote github branch on the repository.
+    
+6. Now that the necessary changes have been made, the changes can be pushed to your feature branch which will trigger the yc_training_unit_test workflow.
 
     > Action Items:
     > - Run the following commands in sequence to stage changes, commit them, and then push them to your repo:
@@ -70,7 +75,7 @@ Your team wants to learn how to automate and orchestrate common tasks such as en
 
     > - If all steps pass (you can check the status under the actions in the repository), a new pull request is made to the integration branch. If the workflow fails, there could be a few different reasons, you can open the workflow steps on the actions tab of the repository and examine it. 
     
-6. Optional: Repeat step 2-5 to setup scoring unit test workflow with yc_scoring_unit_test.yml. Please note the trigger settings on "paths". 
+7. Optional: Repeat step 2-5 to setup scoring unit test workflow with yc_scoring_unit_test.yml. Please note the trigger settings on "paths". 
 
 
 ## The CI CD Workflow is shown below:
