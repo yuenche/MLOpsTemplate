@@ -20,16 +20,16 @@ Your team wants to learn how to automate and orchestrate common tasks such as en
     git checkout yourname-dev
     ```
    
-2. Create an automated unit test task that will be triggered by pushing the code to your development/feature branch. Let's use the ```Feature_Engineering``` module as the automated unit test to run to make sure the module performs correctly.
+2. Create an automated unit test task that will be triggered by pushing the code to your development/feature branch. Let's use the ```training_pipeline``` module as the automated unit test to run to make sure the module performs correctly.
 
     > Action Items: Update the `yc_training_unit_test.yml` file with your secret credentials. 
     > - Locate the file named `yc_training_unit_test.yml` in the `.github/workflows` folder
     > - Make the following updates to the file: 
     >     - Update the secret name by replacing the ```MY_AZURE_CREDENTIALS``` to match the GitHub secret name for your Service Principal that was created in Part 0. (It most likely has a name similar to ```AZURE_CREDENTIALS_USERNAME```.)
     
-    Workflows in yc_training_unit_test.yml loads environment viariables from .env files.
+    Workflows in yc_training_unit_test.yml loads environment variables from .env files.
 
-    > Action Items: Configure the viariables for development enviroment in `src/workshop/env/.env.dev`
+    > Action Items: Configure the variables for development enviroment in `src/workshop/env/.env.dev`
 
     > - `group`: resource group of the AML dev workspace.
     > - `workspace`: the AML dev workspace.
