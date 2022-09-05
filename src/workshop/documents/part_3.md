@@ -21,12 +21,12 @@ Your team wants to learn how to automate and orchestrate common tasks such as en
     ```
 2. Configure the viariables for development enviroment in `src/workshop/env/.env.dev`.
 
-    > `group`: resource group of the AML dev workspace
-    > `workspace`: the AML dev workspace
-    > `location`: the location of the AML dev workspace
-    > `compute`: the name of the compute cluster in dev
-    > `endpoint`: the name of the model endpoint in dev
-    > `model`: the model name
+    > - `group`: resource group of the AML dev workspace.
+    > - `workspace`: the AML dev workspace.
+    > - `location`: the location of the AML dev workspace.
+    > - `compute`: the name of the compute cluster in dev.
+    > - `endpoint`: the name of the model endpoint in dev.
+    > - `model`: the model name.
     
 3. Create an automated unit test task that will be triggered by pushing the code to your development/feature branch. Let's use the ```Feature_Engineering``` module as the automated unit test to run to make sure the module performs correctly.
 
