@@ -32,33 +32,15 @@ After learning about how GitHub can be leveraged for MLOps, your team decides to
 
     The default for the model is set to 100,000. By updating alpha we think it will improve the model performance, let's find out! Make sure to save the changes to the file. Now we want to commit these changes to the local branch and push them to our github repository. This will update the remote github branch on the repository.
 
-4. Run following commands in sequence (one by one) to stage changes, commit them and then push them to your repo. Git status show the files that have been modified. It's a useful command to know what's the latest status of the files.
+4. Approve and merge the Pull Request created in Part_4 to integration branch. This will trigger the training in  yc_ci_train workflow.
 
-    >Action Items: Run the following commands sequentially:
-    ```bash
-    git status
-    ```
-    ```bash
-    git add .
-    ```
-    ```bash
-    git commit -am "a short summary of changes made- put your own comments here"
-    ```
-    ```bash
-    git push origin yourname-dev
-    ```
-5. At this point you have made some changes to your code and have pushed the changes to your brnach on the repository. In order for us to make these changes permanent and take it eventually to deployment and production, we need to place these changes in the "integration" branch.
-
-    >Action Items:
+    >Action Items: Merge the Pull Request created by yc_training_unit_test workflow.
     >- Go to your browser and go to your repository. 
-    >- Click on "pull requests" tab and Click on "New pull request". 
-    >
-    >- Set the `base` branch to `integration` and the `compare` branch to `yourname-dev`.
-    >- Make sure the integration branch you choose as the base is pointing to your forked repository and **NOT** the Microsoft MLOpsTemplate repository.
-    >- Click on "Create pull request".
+    >- Click on "pull requests" tab and click on the new PR "An automatically created PR by successful unit test to integration". 
+    >- Reviw the commits into `integration` branch from `yourname-dev`.
     >- Click on "Merge pull request".
-
-    This creates a pull request to the integration branch and merges it. As a reminder, integration branch is a branch which is as up to date as the main branch but we use it to evaluate the new feature. Here we made some changes to the model, and we want to make sure the new model passes the evaluation. If not,it will stop us from going to the CD process and making changes to the main branch where our production code lives.
+    
+    As a reminder, integration branch is a branch which is as up to date as the main branch but we use it to train the model. Here we made some changes to the model, and we want to train and evaluate the new model. If the evaluation fails, it won't trigger the CD process and making changes to the main branch where our production code lives.
 
 6. The merge to the integration branch triggers the yc-ci-train workflow. Click on the Actions tab on your repository and you will see CI workflow running after a few minutes. Click and examine all the steps, note that the CI Workflow is running following the steps in the ```yc-ci-train.yml``` file which you located earlier. Note that in the first few lines of this file we have defined the workflow to be triggered when a pull request is merged in the "integration" branch.
 
