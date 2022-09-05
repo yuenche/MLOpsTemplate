@@ -5,36 +5,40 @@
 
 ## Summary 
 
-After a successful run of the CI pipeline, your team is looking to complete the process with a CD pipeline that will handle the deployment of the model without introducing any downtime in production (otherwise termed as a "hot swap").
+After a successful run of the CI pipeline, your team is looking to complete the process with a CD pipeline that will handle the deployment of the model to staging and production. "hot swap" is used in the example as a deployment mechanism to avoid downtime. 
 
-The goal of this section is to get a fully functional CD pipeline that will:
+The goal of this section is to build a CD pipeline to:
     
-1. Trigger based on creation of a Pull Request (PR) to main.
-2. Login to Azure using a Service Principal to be able to leverage the Azure ML CLI commands in your workflow.
-3. Create a model API endpoint (webservice) using an Azure ML Managed Endpoint and deploy the model to the endpoint into one of the two deployment slots (blue/green slots, which will switch staging/production roles).
-    - Test the deployment to the endpoint of the new model.
-    - On success of test, swap the deployment to accept 100% of the service endpoint traffic (and therefore become 'production').
-4. Add a Branch Protection rule in GitHub.
+- Deploy the model to staging when a new model is generated and registered. 
+- Create PR to main branch and trigger the model deployment to production. 
+- Create a model API endpoint (webservice) using an Azure ML Managed Endpoint and deploy the model to the endpoint into one of the two deployment slots (blue/green slots, which will switch staging/production roles).
+    > - Test the deployment to the endpoint of the new model.
+    > - On success of test, swap the deployment to accept 100% of the service endpoint traffic (and therefore become 'production').
+- Add a Branch Protection rule in GitHub.
 
 ## Steps
 
-1. You define triggers as part of a GitHub Actions workflow. The triggers for this workshop have already been defined in `.github/workflows/workshop_cd.yml`. Please review this file to understand how we've establised a trigger mechanism to enable a deployment of code that has succesfully passed CI, and is ready to be deployed to production.
 
-    Review the key elements of the trigger section:
 
-    - 'workflow_dispatch': this enables to run the CD pipeline on demand from the GitHub UI as this will greatly facilitate testing. In practice you would eventually remove this trigger type and fully depend on the rest of the automation.
-
-    - 'pull_request': defines the trigger to kick in when an integration is open to main, and a specific set of files have been modified in the pull request (any code change, or CD definition change that would justify pushing a new deployment live). See [Events that Trigger Workflows](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows) for details around the trigger syntax and the type of controls available to build your custom trigger rules.
-
-2. The CD workflow will rely heavily on the Azure CLI to control the infrastructure and implement the automation of the model deployments. Therefore, we need to setup this workflow to login to Azure via a Service Principal to be able to leverage the Azure CLI.
+2. The CD workflows are defined in `.github/workflows/yc_cd_staging.yml` and `.github/workflows/yc_cd_prod.yml`. Both rely on the Azure CLI to control the infrastructure and implement the automation of the model deployments. Therefore, we need to setup this workflow to login to Azure via a Service Principal to be able to leverage the Azure CLI.
 
     > Action Items:
-    > 1. Open up the `workflow_cd.yml` file in your repo (.github/workflow location)
-    > 2. Update the 'creds: ${{ secrets...' section in this file to setup your secret name. Follow the instructions in this file annotated with #setup.
+    > 1. Open up the `yc_cd_staging.yml` and `yc_cd_prod.yml` file in your repo (.github/workflow location)
+    > 2. Update the 'creds: ${{ secrets...' section in this file to setup your secret name. Follow the instructions in this file annotated with #setup.triggers as part of a GitHub Actions workflow. 
 
-    > Note: Please refer to [Use the Azure login action with a service principal secret](https://docs.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Cwindows#use-the-azure-login-action-with-a-service-principal-secret) to create the proper Azure Credentials if you haven't done so already (you should have already defined such secret to complete the CI part of the workshop, i.e. [Part 4](part_4.md)).
+3. Please review the workflow files to understand how we've establised a trigger mechanism to enable a deployment of code that has succesfully passed CI, and is ready to be deployed to staging and production.
 
-3. We will now configure our Azure ML deployments, and the GitHub workflow which will automate these deployments.
+   The triggers of deployment to staging `yc_cd_staging.yml`:
+   - The completion of workflow `yc-ci-train`
+   - Push to `integration` branch with path filter
+   - 'workflow_dispatch': this enables to run the CD pipeline on demand from the GitHub UI as this will greatly facilitate testing. In practice you would eventually remove this trigger type and fully depend on the rest of the automation.
+
+
+   The triggers of deployment to production `yc_cd_prod.yml`:
+   - Push to `main` branch
+   - 'workflow_dispatch'
+
+4. We will now configure our Azure ML deployments, and the GitHub workflow which will automate these deployments.
 
     - Two files control your Azure ML deployments:
         - `/core/scoring/endpoint.yml`: this is your endpoint.
@@ -42,12 +46,15 @@ The goal of this section is to get a fully functional CD pipeline that will:
         - `/core/scoring/deployment.yml`: this defines an actual deployment to an endpoint. 
 
     You can have as many deployments as you want behind an endpoint. The endpoint traffic routing enables you to control which parts of the traffic to the endpoint gets routed to which deployment. In this workshop, we take the blue/green approach where we'll have 2 deployments (named green and blue respectively), which will take turn playing the role of production/staging. We only have one deployment file define though, as we automatically override the name of the deployment as part of a custom GitHub action which we'll review later in this section.
-
-    > Action Items:
-    > 1. Edit `endpoint.yml` file to setup the name of your endpoint. This name needs to be unique within the region you are deploying into as the endpoint name is part of the endpoint URI. Look for #setup in that file.
-    > 2. Edit `deployment.yml` to setup the name of the endpoint this deployment belongs to to the same name you defined just above. Look for #setup in that file.
-
-    Now let's configure the GitHub Actions workflow file that controls the CD process located at `.github/workflows/workshop_cd.yml`
+    
+    Workflows in `yc_cd_staging.yml` and `yc_cd_prod.yml` load environment viariables from .env files.  
+    > Action Items: Configure the viariables for development enviroment in `src/workshop/env/.env.prod`. (You have already configured `src/workshop/env/.env.staging` in Part_4 )
+    > - `group`: resource group of the AML production workspace.
+    > - `workspace`: the AML production workspace.
+    > - `location`: the location of the AML production workspace.
+    > - `compute`: the name of the compute cluster in production.
+    > - `endpoint`: the name of the model endpoint in production. This name needs to be unique within the region you are deploying into as the endpoint name is part of the endpoint URI.
+    > - `model`: the model name.
 
     > Action Item:
     >- Edit `workshop_cd.yml` to setup your Azure resource group name and Azure ML workspace name which are being passed as parameters to a set of custom GitHub Actions. Look for #setup and follow the instructions in the file.
