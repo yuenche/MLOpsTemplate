@@ -100,7 +100,7 @@ The goal of this section is to build a CD pipeline to:
 
 6. You can also implement a manual gate to introduce manual approval process prior to production deployment. It can be done by setting environment protection rules in GitHub. Please follow the [guide](https://cloudlumberjack.com/posts/github-actions-approvals/). 
 
-    > (images/github_env_protection.jpeg)
+    > ![pipeline](images/github_env_protection.jpeg)
 
 
 ## Success criteria
