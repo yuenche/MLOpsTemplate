@@ -11,7 +11,7 @@ The goal of this section is to build a CD pipeline to:
     
 - Deploy the model to staging when a new model is generated and registered. 
 - Create PR to main branch and trigger the model deployment to production. 
-- Create a model API endpoint (webservice) using an Azure ML Managed Endpoint and deploy the model to the endpoint into one of the two deployment slots (blue/green slots, which will switch staging/production roles).
+- Create a model API endpoint (webservice) using an Azure ML Managed Endpoint and deploy the model to the endpoint into one of the two deployment slots (blue/green slots).
     > - Test the deployment to the endpoint of the new model.
     > - On success of test, swap the deployment to accept 100% of the service endpoint traffic (and therefore become 'production').
 - Add a Branch Protection rule in GitHub.
