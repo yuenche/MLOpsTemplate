@@ -36,7 +36,7 @@ Your team wants to learn how to automate and orchestrate common tasks such as en
     -  Review the job starting at the `jobs:` section that has been created already and does the following steps:
         - Checks out the repo
         - Logs into Azure
-        - Creates an AML job to run feature engineering module using the [custom action](../../../.github/actions/aml-job-create/action.yaml) and the existing [feature engineering job file](../core/data_engineering/feature_engineering.yml)
+        - Creates an AML job to run the AML training pipeline using the [custom action](../../../.github/actions/aml-job-create/action.yaml) and the existing [training pipeline job file](../core/pipelines/training_pipeline.yml)
 
 4. Make changes to the `training_pipeline.yml` file to ensure job will run successful
     > Note: you may have done this in part 2, but still check the file to make sure.
