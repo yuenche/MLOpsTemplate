@@ -23,13 +23,13 @@ Your team wants to learn how to automate and orchestrate common tasks such as en
 
 2. Create an automated unit test task that will be triggered by pushing the code to your development/feature branch. Let's use the ```Feature_Engineering``` module as the automated unit test to run to make sure the module performs correctly.
 
-    > Action Items: Update the `workshop_unit_test.yml` file with your secret credentials. Replace the resource group, workspace and location with your specific details.
-    > - Locate the file named `workshop_unit_test.yml` in the `.github/workflows` folder
+    > Action Items: Update the `yc_training_unit_test.yml` file with your secret credentials. Replace the resource group, workspace and location with your specific details.
+    > - Locate the file named `yc_training_unit_test.yml` in the `.github/workflows` folder
     > - Make the following updates to the file: 
     >     - Update the secret name by replacing the ```MY_AZURE_CREDENTIALS``` to match the GitHub secret name for your Service Principal that was created in Part 0. (It most likely has a name similar to ```AZURE_CREDENTIALS_USERNAME```.)
     >     - Update `GROUP`, `NAME`, and `LOCATION` with the specific names of your resource group, workspace, and location created in Part 0.
 
-3. Next, review the contents in the ```workshop_unit_test.yml``` file to understand the steps and how it is being triggered.
+3. Next, review the contents in the ```yc_training_unit_test.yml``` file to understand the steps and how it is being triggered.
 
     - Review the trigger defined in the `on:` section to see how this workflow is being run automatically
         - The `workflow_dispatch` allows the workflow to be run manually which can be useful when testing.
@@ -46,7 +46,7 @@ Your team wants to learn how to automate and orchestrate common tasks such as en
     > - Locate the file named ```feature_engineering.yml``` in the ```src/workshop/core/data_engineering``` folder
     > - Replace the compute cluster name under `compute` with your specific compute cluster name
 
-5. Now that the necessary changes have been made, the changes can be pushed to your feature branch which will trigger the feature_engineering_unit_test workflow.
+5. Now that the necessary changes have been made, the changes can be pushed to your feature branch which will trigger the yc_training_unit_test workflow.
 
     > Action Items:
     > - Run the following commands in sequence to stage changes, commit them, and then push them to your repo:
@@ -71,8 +71,8 @@ Your team wants to learn how to automate and orchestrate common tasks such as en
 
 ## Success criteria
 - A feature or development branch was created to track your changes
-- Trigger was created on the workflow file ```workshop_unit_test.yml``` to run on a push to your feature branch
-- Understand the additional updates that were made both the ```workshop_unit_test.yml``` and ```feature_engineering.yml``` file for it to use your secrets and AML resources
+- Trigger was created on the workflow file ```yc_training_unit_test.yml``` to run on a push to your feature branch
+- Understand the additional updates that were made both the ```yc_training_unit_test.yml``` and ```feature_engineering.yml``` file for it to use your secrets and AML resources
 - Workflow was successfully triggered by pushing changes to your feature branch
 
 ## Reference materials
