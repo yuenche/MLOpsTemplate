@@ -39,6 +39,7 @@ After learning about how GitHub can be leveraged for MLOps, your team decides to
     >- Click on "pull requests" tab and click on the new PR "An automatically created PR by successful unit test to integration". 
     >- Reviw the commits into `integration` branch from `yourname-dev`.
     >- Click on "Merge pull request".
+    >- Click on "Confirm merge".
     
     As a reminder, integration branch is a branch which is as up to date as the main branch but we use it to train the model. Here we made some changes to the model, and we want to train and evaluate the new model. If the evaluation fails, it won't trigger the CD process and making changes to the main branch where our production code lives.
 
@@ -50,9 +51,10 @@ After learning about how GitHub can be leveraged for MLOps, your team decides to
     
     >Note: At this point, it takes about 10 minutes for the pipeline to run.
     
-    If all steps pass (you can check the status under the actions in the repository), a new pull request is made to the main branch. If the workflow fails, there could be a few different reasons, you can open the workflow steps on the actions tab of the repository and examine it. Most likely if it fails in this case is due to the evaluation part, where our new model performs worse than our best previous model and doesn't pass the evaluation step and the whole workflow fails. To resolve that continue reading the following section.
+    If all steps pass (you can check the status under the actions in the repository), a new model is registered to AML model registry, and the new model will be deployed to staging environment (described in Part_5). If the workflow fails, there could be a few different reasons, you can open the workflow steps on the actions tab of the repository and examine it. Most likely if it fails in this case is due to the evaluation part, where our new model performs worse than our best previous model and doesn't pass the evaluation step and the whole workflow fails. To resolve that continue reading the following section.
 
 > OPTIONAL READING: For the evaluation and comparison of the current model with our best previous model, we have included some code in the following script: ```/src/workshop/core/evaluating/ml_evaluating.py```. Note that on line 85 of the script we are comparing the R-square of the current model with our best previous model in order to decide if we want to allow any changes to the model and main branch. You might want to edit this and relax it a little bit in order for the evaluation step to pass if you already have a really good model registered. Note that you can change the evaluation metrics based on your actual use case in the future.
+
 
 ## Success criteria
 - Trigger CI workflow when a pull request is merged to the integration branch
