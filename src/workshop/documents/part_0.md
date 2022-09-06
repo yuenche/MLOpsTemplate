@@ -438,9 +438,9 @@ You are going to create PAT to allow your code access your personal git repo
 
     ![](./images/github4001.png)
 
-- Type `USER_NAME_GITHUB_SECRET` for the name of the secret, and paste the token you copied from PAT section
+- Type `{USER_NAME}_GITHUB_SECRET` for the name of the secret, and paste the token you copied from PAT section
 
-    > Important: The name for this secret must be `USER_NAME_GITHUB_SECRET`
+    > Important: The name for this secret must be `{USER_NAME}_GITHUB_SECRET`
 
     ![](./images/github4008.png)
 
@@ -484,9 +484,9 @@ You have saved in step A9, B9 or C7 the output of the SP creation command, it sh
 
     ![](./images/github4001.png)
 
-- Type `AZURE_CREDENTIALS_USERNAME` for the name of the secret, and paste your SP json definition:
+- Type `AZURE_CREDENTIALS_{USERNAME}` for the name of the secret, and paste your SP json definition:
 
-    > Important: The name for this secret must be `AZURE_CREDENTIALS_USERNAME`
+    > Important: The name for this secret must be `AZURE_CREDENTIALS_{USERNAME}`
 
     ![](./images/github4002.png)
 
