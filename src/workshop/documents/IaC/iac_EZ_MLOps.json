@@ -32,9 +32,10 @@
         "eastus2",
         "southcentralus",
         "westcentralus",
-        "westus"
+        "westus",
+        "westeurope"
       ],
-      "defaultValue": "eastus2",
+      "defaultValue": "westeurope",
       "metadata": {
         "description": "Specifies the location of the Azure Machine Learning workspace and dependent resources."
       }
