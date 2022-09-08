@@ -43,7 +43,7 @@ jobs:
       - name: AZ Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS_YUENCHE }} # SETUP: replace MY_AZURE_CREDENTIALS with your own secret name  
+          creds: ${{ secrets.AZURE_CREDENTIALS_IBIZACA }} # SETUP: replace MY_AZURE_CREDENTIALS with your own secret name
       - name: Install AZ ML and tools
         run: | 
           az extension add -n ml -y
@@ -60,7 +60,7 @@ jobs:
       - name: Create Pull Request to Integration
         uses: thomaseizinger/create-pull-request@master
         with:
-          GITHUB_TOKEN: ${{ secrets.YUENCHE_GITHUB_SECRET }} #setup: provide your github secret name
+          GITHUB_TOKEN: ${{ secrets.IBIZACA_GITHUB_SECRET }} #setup: provide your github secret name
           head: ${{ github.ref }}
           base: integration
           title: "An automatically created PR by successful unit test to integration"
